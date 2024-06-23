@@ -4,7 +4,6 @@ import { MovableObject } from './MovableObject'
 
 
 type CanvasGraphicsContext = {
-	canvas: HTMLCanvasElement
 	canvasContext: CanvasRenderingContext2D
 	image: HTMLImageElement
 	playable: DrawableInterface
@@ -25,7 +24,6 @@ async function initialize(canvas: HTMLCanvasElement): Promise<CanvasGraphicsCont
 	const player = new MovableObject(10, 10, 100, 100)
 
 	const context: CanvasGraphicsContext = {
-		canvas: canvas,
 		canvasContext: ctx,
 		image: image,
 		playable: player
@@ -36,8 +34,8 @@ async function initialize(canvas: HTMLCanvasElement): Promise<CanvasGraphicsCont
 
 
 function eventLoop(context: CanvasGraphicsContext) {
-	const canvas = context.canvas
 	const ctx = context.canvasContext
+	const canvas = ctx.canvas
 	const image = context.image
 	const player = context.playable
 	
