@@ -15,11 +15,11 @@ export class MovableObject implements DrawableInterface {
 		this.height = height
 	}
 
-	update() {
-		if (KeyState.right) {this.x += 1}
-		if (KeyState.left) {this.x -= 1}
-		if (KeyState.up) {this.y -= 1}
-		if (KeyState.down) {this.y += 1}
+	update(dt: DOMHighResTimeStamp) {
+		if (KeyState.right) {this.x += 1 * dt}
+		if (KeyState.left) {this.x -= 1 * dt}
+		if (KeyState.up) {this.y -= 1 * dt}
+		if (KeyState.down) {this.y += 1 * dt}
 		console.log('dx: ', this.x, ', dy: ', this.y)
 	}
 	

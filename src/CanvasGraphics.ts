@@ -33,26 +33,31 @@ async function initialize(canvas: HTMLCanvasElement): Promise<CanvasGraphicsCont
 }
 
 
-function eventLoop(context: CanvasGraphicsContext) {
+function eventLoop(context: CanvasGraphicsContext, dt: DOMHighResTimeStamp) {
 	const ctx = context.canvasContext
-	const canvas = ctx.canvas
 	const image = context.image
 	const player = context.playable
 	
-	ctx.clearRect(0, 0, canvas.width, canvas.height)
+	ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
 
-	ctx.drawImage(image, 0, 0, canvas.width, canvas.height)
+	ctx.drawImage(image, 0, 0, ctx.canvas.width, ctx.canvas.height)
 
-	player.update()
+	player.update(dt)
 	player.draw(ctx)
 }
 
 
 export async function setupCanvasGraphics(canvas: HTMLCanvasElement) {
+	const fps = import.meta.env.VITE_STANDARD_FPS
+	const fpsMillSecond = 1000 / fps
+	let then: DOMHighResTimeStamp = performance.now()
 	const context = await initialize(canvas)
 
-	const render = () => {
-		eventLoop(context)
+	const render = (now: DOMHighResTimeStamp) => {
+		const deltaTime = (now - then) / fpsMillSecond  // 1秒間にfpsで規定された時間処理されることを期待する
+		then = now
+
+		eventLoop(context, deltaTime)
 		requestAnimationFrame(render)
 	}
 

@@ -1,6 +1,6 @@
 
 export interface DrawableInterface {
-	update(): void
+	update(dt: DOMHighResTimeStamp): void
 	draw(ctx: CanvasRenderingContext2D): void
 }
 
