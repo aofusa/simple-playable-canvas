@@ -3,9 +3,6 @@ import type { DrawableInterface } from './DrawableInterface'
 import { MovableObject } from './MovableObject'
 
 
-const FPS = 1000 / 60
-
-
 type CanvasGraphicsContext = {
 	canvasContext: CanvasRenderingContext2D
 	image: HTMLImageElement
@@ -53,6 +50,12 @@ function eventLoop(context: CanvasGraphicsContext) {
 
 export async function setupCanvasGraphics(canvas: HTMLCanvasElement) {
 	const context = await initialize(canvas)
-	setInterval(eventLoop, FPS, context)
+
+	const render = () => {
+		eventLoop(context)
+		requestAnimationFrame(render)
+	}
+
+	requestAnimationFrame(render)
 }
 
